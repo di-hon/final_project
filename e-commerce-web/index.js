@@ -16,10 +16,12 @@ const morgan = require("morgan");
 const { notFound, errorHandler } = require("./middlewares/errorHandler");
 const app = express();
 const PORT = process.env.PORT || 4000;
+const cors = require("cors");
 
 dbConnect();
 
 app.use(morgan("dev"));
+app.use(cors());
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
