@@ -23,6 +23,7 @@ const {
   createOrder,
   getOrders,
   updateOrderStatus,
+  getAllOrders,
 } = require("../../controllers/User/userController");
 const { authMiddleware, isAdmin } = require("../../middlewares/authMiddleware");
 const router = express.Router();
@@ -39,6 +40,7 @@ router.post("/cart/apply-coupon", authMiddleware, applyCoupon);
 router.post("/cart/cash-order", authMiddleware, createOrder);
 router.get("/all-users", getUsers);
 router.get("/order", authMiddleware, getOrders);
+router.get("/all-orders", authMiddleware, isAdmin, getAllOrders);
 router.get("/refresh", handleRefreshToken);
 router.get("/logout", logout);
 router.get("/wishlist", authMiddleware, getWishlist);

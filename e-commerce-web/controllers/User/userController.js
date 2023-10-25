@@ -416,6 +416,7 @@ const applyCoupon = asyncHandler(async (req, res) => {
   res.json(totalAfterDiscount);
 });
 
+// CREATE ORDER
 const createOrder = asyncHandler(async (req, res) => {
   const { COD, couponApplied } = req.body;
   const { _id } = req.user;
@@ -465,6 +466,7 @@ const getOrders = asyncHandler(async (req, res) => {
   try {
     const userOrders = await Order.findOne({ orderBy: _id })
       .populate("products.product")
+      .populate("orderBy")
       .exec();
     res.json(userOrders);
   } catch (error) {
@@ -472,6 +474,20 @@ const getOrders = asyncHandler(async (req, res) => {
   }
 });
 
+// GET ALL ORDERS
+const getAllOrders = asyncHandler(async (req, res) => {
+  try {
+    const allOrders = await Order.find()
+      .populate("products.product")
+      .populate("orderBy")
+      .exec();
+    res.json(allOrders);
+  } catch (error) {
+    throw new Error(error);
+  }
+});
+
+// UPDATE ORDER STATUS
 const updateOrderStatus = asyncHandler(async (req, res) => {
   const { status } = req.body;
   const { id } = req.params;
@@ -519,4 +535,5 @@ module.exports = {
   createOrder,
   getOrders,
   updateOrderStatus,
+  getAllOrders,
 };
