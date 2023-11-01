@@ -55,7 +55,7 @@ const AddProduct = () => {
     if (isError) {
       toast.error("Something went wrong");
     }
-  }, [isSuccess, isError, isLoading]);
+  }, [isSuccess, isError, isLoading, createdProduct]);
 
   const colorOPT = [];
   colorState.forEach((i) => {

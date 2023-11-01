@@ -15,15 +15,15 @@ const AddCategory = () => {
   const navigate = useNavigate();
   const newCategory = useSelector((state) => state.productCategory);
 
-  const { isSuccess, isError, isLoading, createdCategory } = newCategory;
+  const { isSuccess, isError, isLoading, createdCategories } = newCategory;
   useEffect(() => {
-    if (isSuccess && createdCategory) {
+    if (isSuccess && createdCategories) {
       toast.success("Category added successfully!");
     }
     if (isError) {
       toast.error("Something went wrong");
     }
-  }, [isSuccess, isError, isLoading]);
+  }, [isSuccess, isError, isLoading, createdCategories]);
 
   const formik = useFormik({
     initialValues: {

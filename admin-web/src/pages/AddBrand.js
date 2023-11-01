@@ -23,7 +23,7 @@ const AddBrand = () => {
     if (isError) {
       toast.error("Something went wrong");
     }
-  }, [isSuccess, isError, isLoading]);
+  }, [isSuccess, isError, isLoading, createdBrand]);
 
   const formik = useFormik({
     initialValues: {
