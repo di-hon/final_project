@@ -15,15 +15,15 @@ const AddBrand = () => {
   const navigate = useNavigate();
   const newBrand = useSelector((state) => state.brand);
 
-  const { isSuccess, isError, isLoading, createdBrand } = newBrand;
+  const { isSuccess, isError, isLoading, createdBrands } = newBrand;
   useEffect(() => {
-    if (isSuccess && createdBrand) {
+    if (isSuccess && createdBrands) {
       toast.success("Brand added successfully!");
     }
     if (isError) {
       toast.error("Something went wrong");
     }
-  }, [isSuccess, isError, isLoading, createdBrand]);
+  }, [isSuccess, isError, isLoading, createdBrands]);
 
   const formik = useFormik({
     initialValues: {

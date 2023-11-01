@@ -59,7 +59,7 @@ export const brandSlice = createSlice({
         state.isLoading = false;
         state.isError = false;
         state.isSuccess = true;
-        state.createdBrand = action.payload;
+        state.createdBrands = action.payload;
       })
       .addCase(createBrands.rejected, (state, action) => {
         state.isLoading = false;

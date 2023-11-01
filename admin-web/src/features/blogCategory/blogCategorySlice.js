@@ -12,6 +12,17 @@ export const getBlogCategories = createAsyncThunk(
   }
 );
 
+export const createBlogCategories = createAsyncThunk(
+  "blog-category/create-blog-category",
+  async (blogCategoryData, thunkAPI) => {
+    try {
+      return await blogCategoryService.createBlogCategory(blogCategoryData);
+    } catch (error) {
+      return thunkAPI.rejectWithValue(error);
+    }
+  }
+);
+
 const initialState = {
   blogCategories: [],
   isError: false,
@@ -36,6 +47,21 @@ export const blogCategorySlice = createSlice({
         state.blogCategories = action.payload;
       })
       .addCase(getBlogCategories.rejected, (state, action) => {
+        state.isLoading = false;
+        state.isError = true;
+        state.isSuccess = false;
+        state.message = action.error;
+      })
+      .addCase(createBlogCategories.pending, (state) => {
+        state.isLoading = true;
+      })
+      .addCase(createBlogCategories.fulfilled, (state, action) => {
+        state.isLoading = false;
+        state.isError = false;
+        state.isSuccess = true;
+        state.createdBlogCategories = action.payload;
+      })
+      .addCase(createBlogCategories.rejected, (state, action) => {
         state.isLoading = false;
         state.isError = true;
         state.isSuccess = false;
