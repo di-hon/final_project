@@ -15,16 +15,16 @@ const AddBlogCategory = () => {
   const navigate = useNavigate();
   const newBlogCategory = useSelector((state) => state.blogCategory);
 
-  const { isSuccess, isError, isLoading, createdBlogCategories } =
+  const { isSuccess, isError, isLoading, createdBlogCategory } =
     newBlogCategory;
   useEffect(() => {
-    if (isSuccess && createdBlogCategories) {
+    if (isSuccess && createdBlogCategory) {
       toast.success("Blog category added successfully!");
     }
     if (isError) {
       toast.error("Something went wrong");
     }
-  }, [isSuccess, isError, isLoading, createdBlogCategories]);
+  }, [isSuccess, isError, isLoading, createdBlogCategory]);
 
   const formik = useFormik({
     initialValues: {

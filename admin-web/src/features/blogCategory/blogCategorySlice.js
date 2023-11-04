@@ -32,7 +32,7 @@ const initialState = {
 };
 
 export const blogCategorySlice = createSlice({
-  name: "blogCategory",
+  name: "blogCategories",
   initialState,
   reducers: {},
   extraReducers: (builder) => {
@@ -59,7 +59,7 @@ export const blogCategorySlice = createSlice({
         state.isLoading = false;
         state.isError = false;
         state.isSuccess = true;
-        state.createdBlogCategories = action.payload;
+        state.createdBlogCategory = action.payload;
       })
       .addCase(createBlogCategories.rejected, (state, action) => {
         state.isLoading = false;
