@@ -9,7 +9,7 @@ import * as Yup from "yup";
 import { useDispatch, useSelector } from "react-redux";
 import { toast } from "react-toastify";
 import { useNavigate } from "react-router-dom";
-import { createBlogs } from "../features/blog/blogSlice";
+import { createBlogs, resetState } from "../features/blog/blogSlice";
 import { getBlogCategories } from "../features/blogCategory/blogCategorySlice";
 
 let schema = Yup.object().shape({
@@ -66,6 +66,7 @@ const AddBlog = () => {
       dispatch(createBlogs(values));
       formik.resetForm();
       setTimeout(() => {
+        dispatch(resetState());
         navigate("/admin/blog-list");
       }, 3000);
     },

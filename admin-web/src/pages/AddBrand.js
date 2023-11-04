@@ -6,6 +6,7 @@ import { toast } from "react-toastify";
 import { useFormik } from "formik";
 import * as Yup from "yup";
 import { createBrands } from "../features/brand/brandSlice";
+import { resetState } from "../features/blog/blogSlice";
 
 let schema = Yup.object().shape({
   name: Yup.string().required("Brand name is required"),
@@ -34,6 +35,7 @@ const AddBrand = () => {
       dispatch(createBrands(values));
       formik.resetForm();
       setTimeout(() => {
+        dispatch(resetState());
         navigate("/admin/brand-list");
       }, 3000);
     },
