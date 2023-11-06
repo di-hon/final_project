@@ -4,7 +4,7 @@ import { BiEdit } from "react-icons/bi";
 import { AiFillDelete } from "react-icons/ai";
 import { useDispatch, useSelector } from "react-redux";
 import { getBlogs } from "../features/blog/blogSlice";
-import Link from "antd/es/typography/Link";
+import { Link } from "react-router-dom";
 
 const columns = [
   {
