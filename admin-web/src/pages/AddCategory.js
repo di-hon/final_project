@@ -5,8 +5,10 @@ import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 import { useFormik } from "formik";
 import * as Yup from "yup";
-import { createProductCategories } from "../features/productCategory/productCategorySlice";
-import { resetState } from "../features/blog/blogSlice";
+import {
+  createProductCategories,
+  resetState,
+} from "../features/productCategory/productCategorySlice";
 
 let schema = Yup.object().shape({
   name: Yup.string().required("Category name is required"),
@@ -36,7 +38,6 @@ const AddCategory = () => {
       formik.resetForm();
       setTimeout(() => {
         dispatch(resetState());
-        navigate("/admin/category-list");
       }, 3000);
     },
   });

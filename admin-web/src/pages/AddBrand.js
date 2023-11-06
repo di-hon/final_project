@@ -1,30 +1,27 @@
 import { React, useEffect } from "react";
 import CustomInput from "../components/CustomInput";
 import { useDispatch, useSelector } from "react-redux";
-import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 import { useFormik } from "formik";
 import * as Yup from "yup";
-import { createBrands } from "../features/brand/brandSlice";
-import { resetState } from "../features/blog/blogSlice";
+import { createBrands, resetState } from "../features/brand/brandSlice";
 
 let schema = Yup.object().shape({
   name: Yup.string().required("Brand name is required"),
 });
 const AddBrand = () => {
   const dispatch = useDispatch();
-  const navigate = useNavigate();
   const newBrand = useSelector((state) => state.brand);
 
-  const { isSuccess, isError, isLoading, createdBrands } = newBrand;
+  const { isSuccess, isError, isLoading, createdBrand } = newBrand;
   useEffect(() => {
-    if (isSuccess && createdBrands) {
+    if (isSuccess && createdBrand) {
       toast.success("Brand added successfully!");
     }
     if (isError) {
       toast.error("Something went wrong");
     }
-  }, [isSuccess, isError, isLoading, createdBrands]);
+  }, [isSuccess, isError, isLoading, createdBrand]);
 
   const formik = useFormik({
     initialValues: {
@@ -36,7 +33,6 @@ const AddBrand = () => {
       formik.resetForm();
       setTimeout(() => {
         dispatch(resetState());
-        navigate("/admin/brand-list");
       }, 3000);
     },
   });

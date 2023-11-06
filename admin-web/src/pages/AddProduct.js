@@ -13,7 +13,7 @@ import { getColors } from "../features/color/colorSlice";
 import { Select } from "antd";
 import Dropzone from "react-dropzone";
 import { deleteImg, uploadImg } from "../features/upload/uploadSlice";
-import { createProducts } from "../features/product/productSlice";
+import { createProducts, resetState } from "../features/product/productSlice";
 
 let schema = Yup.object().shape({
   name: Yup.string().required("Product name is required"),
@@ -95,7 +95,7 @@ const AddProduct = () => {
       formik.resetForm();
       setColor(null);
       setTimeout(() => {
-        navigate("/admin/product-list");
+        dispatch(resetState());
       }, 3000);
     },
   });
