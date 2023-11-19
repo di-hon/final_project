@@ -37,20 +37,19 @@ const Orders = () => {
   const dispatch = useDispatch();
   useEffect(() => {
     dispatch(getOrders());
-  }, []);
+  }, [dispatch]);
   const orderState = useSelector((state) => state.auth.orders);
+  console.log(orderState);
   const data1 = [];
   for (let i = 0; i < orderState.length; i++) {
     data1.push({
       key: i + 1,
       name: orderState[i].orderBy.firstname,
-      product: orderState[i].products.map((i, j) => {
-        return (
-          <ul key={j}>
-            <li>{i.product.name}</li>
-          </ul>
-        );
-      }),
+      product: (
+        <Link to={`/admin/order/${orderState[i].orderBy._id}`}>
+          View orders
+        </Link>
+      ),
       amount: orderState[i].paymentIntent.amount,
       date: new Date(orderState[i].createdAt).toLocaleString(),
       action: (

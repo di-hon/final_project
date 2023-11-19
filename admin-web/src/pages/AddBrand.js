@@ -31,27 +31,6 @@ const AddBrand = () => {
     updatedBrand,
   } = newBrand;
 
-  useEffect(() => {
-    if (getBrandId !== undefined) {
-      dispatch(getBrand(getBrandId));
-    } else {
-      dispatch(resetState());
-    }
-  }, [getBrandId]);
-
-  useEffect(() => {
-    if (isSuccess && createdBrand) {
-      toast.success("Brand added successfully!");
-    }
-    if (isSuccess && updatedBrand) {
-      toast.success("Brand updated successfully");
-      navigate("/admin/brand-list");
-    }
-    if (isError) {
-      toast.error("Something went wrong");
-    }
-  }, [isSuccess, isError, isLoading, createdBrand]);
-
   const formik = useFormik({
     enableReinitialize: true,
     initialValues: {
@@ -72,6 +51,27 @@ const AddBrand = () => {
       }
     },
   });
+
+  useEffect(() => {
+    if (getBrandId !== undefined) {
+      dispatch(getBrand(getBrandId));
+    } else {
+      dispatch(resetState());
+    }
+  }, [dispatch, getBrandId]);
+
+  useEffect(() => {
+    if (isSuccess && createdBrand) {
+      toast.success("Brand added successfully!");
+    }
+    if (isSuccess && updatedBrand) {
+      toast.success("Brand updated successfully");
+      navigate("/admin/brand-list");
+    }
+    if (isError) {
+      toast.error("Something went wrong");
+    }
+  }, [isSuccess, isError, isLoading, createdBrand, updatedBrand, navigate]);
 
   return (
     <div>

@@ -31,27 +31,6 @@ const AddBlogCategory = () => {
     updatedBlogCategory,
   } = newBlogCategory;
 
-  useEffect(() => {
-    if (getBlogCategoryId !== undefined) {
-      dispatch(getAblogCategory(getBlogCategoryId));
-    } else {
-      dispatch(resetState());
-    }
-  }, [getBlogCategoryId]);
-
-  useEffect(() => {
-    if (isSuccess && createdBlogCategory) {
-      toast.success("Blog category added successfully!");
-    }
-    if (isSuccess && updatedBlogCategory) {
-      toast.success("Blog category updated successfully!");
-      navigate("/admin/blog-category-list");
-    }
-    if (isError) {
-      toast.error("Something went wrong");
-    }
-  }, [isSuccess, isError, isLoading, createdBlogCategory]);
-
   const formik = useFormik({
     enableReinitialize: true,
     initialValues: {
@@ -72,6 +51,35 @@ const AddBlogCategory = () => {
       }
     },
   });
+
+  useEffect(() => {
+    if (getBlogCategoryId !== undefined) {
+      dispatch(getAblogCategory(getBlogCategoryId));
+    } else {
+      dispatch(resetState());
+    }
+  }, [dispatch, getBlogCategoryId]);
+
+  useEffect(() => {
+    if (isSuccess && createdBlogCategory) {
+      toast.success("Blog category added successfully!");
+    }
+    if (isSuccess && updatedBlogCategory) {
+      toast.success("Blog category updated successfully!");
+      navigate("/admin/blog-category-list");
+    }
+    if (isError) {
+      toast.error("Something went wrong");
+    }
+  }, [
+    isSuccess,
+    isError,
+    isLoading,
+    createdBlogCategory,
+    updatedBlogCategory,
+    navigate,
+  ]);
+
   return (
     <div>
       <h3 className="mb-4 title">

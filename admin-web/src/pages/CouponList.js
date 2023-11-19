@@ -50,7 +50,7 @@ const CouponList = () => {
   useEffect(() => {
     dispatch(resetState());
     dispatch(getCoupons());
-  }, []);
+  }, [dispatch]);
   const couponState = useSelector((state) => state.coupon.coupons);
   const data1 = [];
   for (let i = 0; i < couponState.length; i++) {

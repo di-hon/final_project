@@ -31,27 +31,6 @@ const AddColor = () => {
     updatedColor,
   } = newColor;
 
-  useEffect(() => {
-    if (getColorId !== undefined) {
-      dispatch(getColor(getColorId));
-    } else {
-      dispatch(resetState());
-    }
-  }, [getColorId]);
-
-  useEffect(() => {
-    if (isSuccess && createdColors) {
-      toast.success("Color added successfully!");
-    }
-    if (isSuccess && updatedColor) {
-      toast.success("Color updated successfully");
-      navigate("/admin/color-list");
-    }
-    if (isError) {
-      toast.error("Something went wrong");
-    }
-  }, [isSuccess, isError, isLoading, createdColors]);
-
   const formik = useFormik({
     enableReinitialize: true,
     initialValues: {
@@ -72,6 +51,27 @@ const AddColor = () => {
       }
     },
   });
+
+  useEffect(() => {
+    if (getColorId !== undefined) {
+      dispatch(getColor(getColorId));
+    } else {
+      dispatch(resetState());
+    }
+  }, [dispatch, getColorId]);
+
+  useEffect(() => {
+    if (isSuccess && createdColors) {
+      toast.success("Color added successfully!");
+    }
+    if (isSuccess && updatedColor) {
+      toast.success("Color updated successfully");
+      navigate("/admin/color-list");
+    }
+    if (isError) {
+      toast.error("Something went wrong");
+    }
+  }, [isSuccess, isError, isLoading, createdColors, updatedColor, navigate]);
 
   return (
     <div>

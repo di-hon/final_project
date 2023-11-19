@@ -32,13 +32,6 @@ const AddProduct = () => {
   const navigate = useNavigate();
   const [color, setColor] = useState([]);
   const [images, setImage] = useState([]);
-
-  useEffect(() => {
-    dispatch(getBrands());
-    dispatch(getProductCategories());
-    dispatch(getColors());
-  }, []);
-
   const brandState = useSelector((state) => state.brand.brands);
   const productCategoryState = useSelector(
     (state) => state.productCategory.productCategories
@@ -46,17 +39,7 @@ const AddProduct = () => {
   const colorState = useSelector((state) => state.color.colors);
   const imageState = useSelector((state) => state.upload.images);
   const newProduct = useSelector((state) => state.product);
-
   const { isSuccess, isError, isLoading, createdProduct } = newProduct;
-  useEffect(() => {
-    if (isSuccess && createdProduct) {
-      toast.success("Product added successfully!");
-    }
-    if (isError) {
-      toast.error("Something went wrong");
-    }
-  }, [isSuccess, isError, isLoading, createdProduct]);
-
   const colorOPT = [];
   colorState.forEach((i) => {
     colorOPT.push({
@@ -71,12 +54,6 @@ const AddProduct = () => {
       url: i.url,
     });
   });
-
-  useEffect(() => {
-    formik.values.color = color ? color : " ";
-    formik.values.images = image;
-  }, [color, image]);
-
   const formik = useFormik({
     initialValues: {
       name: "",
@@ -103,6 +80,26 @@ const AddProduct = () => {
   const handleDesc = (e) => {
     setDesc(e);
   };
+
+  useEffect(() => {
+    dispatch(getBrands());
+    dispatch(getProductCategories());
+    dispatch(getColors());
+  }, [dispatch]);
+
+  useEffect(() => {
+    if (isSuccess && createdProduct) {
+      toast.success("Product added successfully!");
+    }
+    if (isError) {
+      toast.error("Something went wrong");
+    }
+  }, [isSuccess, isError, isLoading, createdProduct]);
+
+  useEffect(() => {
+    formik.values.color = color ? color : " ";
+    formik.values.images = image;
+  }, [color, formik.values, image]);
 
   const handleColors = (e) => {
     setColor(e);

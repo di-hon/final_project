@@ -21,14 +21,23 @@ const login = async (user) => {
 };
 
 const getOrders = async () => {
-  console.log(getTokenFromLocalStorage.token);
   const response = await axios.get(`${base_url}user/all-orders`, config);
+  return response.data;
+};
+
+const getOrder = async (id) => {
+  const response = await axios.post(
+    `${base_url}user/order-user/${id}`,
+    "",
+    config
+  );
   return response.data;
 };
 
 const authService = {
   login,
   getOrders,
+  getOrder,
 };
 
 export default authService;

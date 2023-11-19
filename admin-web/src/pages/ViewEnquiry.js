@@ -14,6 +14,7 @@ const ViewEnquiry = () => {
   const dispatch = useDispatch();
   const getEnquiryId = location.pathname.split("/")[3];
   const enquiryState = useSelector((state) => state.enquiry);
+
   const {
     enquiryName,
     enquiryMobile,
@@ -24,14 +25,13 @@ const ViewEnquiry = () => {
 
   useEffect(() => {
     dispatch(getEnquiry(getEnquiryId));
-  }, [getEnquiryId]);
+  }, [dispatch, getEnquiryId]);
 
   const goBack = () => {
     navigate(-1);
   };
 
   const setEnquiryStatus = (e, i) => {
-    console.log(e, i);
     const data = { id: i, enquiryData: e };
     dispatch(updateEnquiry(data));
     dispatch(resetState());

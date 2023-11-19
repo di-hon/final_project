@@ -41,27 +41,6 @@ const AddCoupon = () => {
     return [year, month, day].join("-");
   };
 
-  useEffect(() => {
-    if (getCouponId !== undefined) {
-      dispatch(getCoupon(getCouponId));
-    } else {
-      dispatch(resetState());
-    }
-  }, [getCouponId]);
-
-  useEffect(() => {
-    if (isSuccess && createdCoupon) {
-      toast.success("Coupon added successfully!");
-    }
-    if (isSuccess && updatedCoupon) {
-      toast.success("Coupon updated successfully!");
-      navigate("/admin/coupon-list");
-    }
-    if (isError) {
-      toast.error("Something went wrong");
-    }
-  }, [isSuccess, isError, isLoading, createdCoupon]);
-
   const formik = useFormik({
     enableReinitialize: true,
     initialValues: {
@@ -84,6 +63,27 @@ const AddCoupon = () => {
       }
     },
   });
+
+  useEffect(() => {
+    if (getCouponId !== undefined) {
+      dispatch(getCoupon(getCouponId));
+    } else {
+      dispatch(resetState());
+    }
+  }, [dispatch, getCouponId]);
+
+  useEffect(() => {
+    if (isSuccess && createdCoupon) {
+      toast.success("Coupon added successfully!");
+    }
+    if (isSuccess && updatedCoupon) {
+      toast.success("Coupon updated successfully!");
+      navigate("/admin/coupon-list");
+    }
+    if (isError) {
+      toast.error("Something went wrong");
+    }
+  }, [isSuccess, isError, isLoading, createdCoupon, updatedCoupon, navigate]);
 
   return (
     <div>

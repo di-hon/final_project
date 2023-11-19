@@ -31,34 +31,6 @@ const AddCategory = () => {
     updatedCategory,
   } = newCategory;
 
-  useEffect(() => {
-    if (getProductCategoryId !== undefined) {
-      dispatch(getProductCategory(getProductCategoryId));
-    } else {
-      dispatch(resetState());
-    }
-  }, [getProductCategoryId]);
-
-  useEffect(() => {
-    if (isSuccess && createdCategories) {
-      toast.success("Category added successfully!");
-    }
-    if (isSuccess && updatedCategory) {
-      toast.success("Category updated successfully");
-      navigate("/admin/category-list");
-    }
-    if (isError) {
-      toast.error("Something went wrong");
-    }
-  }, [
-    isSuccess,
-    isError,
-    isLoading,
-    createdCategories,
-    categoryName,
-    updatedCategory,
-  ]);
-
   const formik = useFormik({
     enableReinitialize: true,
     initialValues: {
@@ -79,6 +51,34 @@ const AddCategory = () => {
       }
     },
   });
+  useEffect(() => {
+    if (getProductCategoryId !== undefined) {
+      dispatch(getProductCategory(getProductCategoryId));
+    } else {
+      dispatch(resetState());
+    }
+  }, [dispatch, getProductCategoryId]);
+
+  useEffect(() => {
+    if (isSuccess && createdCategories) {
+      toast.success("Category added successfully!");
+    }
+    if (isSuccess && updatedCategory) {
+      toast.success("Category updated successfully");
+      navigate("/admin/category-list");
+    }
+    if (isError) {
+      toast.error("Something went wrong");
+    }
+  }, [
+    isSuccess,
+    isError,
+    isLoading,
+    createdCategories,
+    categoryName,
+    updatedCategory,
+    navigate,
+  ]);
 
   return (
     <div>

@@ -28,7 +28,7 @@ const Customers = () => {
   const dispatch = useDispatch();
   useEffect(() => {
     dispatch(getUsers());
-  }, []);
+  }, [dispatch]);
   const customerState = useSelector((state) => state.customer.customers);
   const data1 = [];
   for (let i = 0; i < customerState.length; i++) {

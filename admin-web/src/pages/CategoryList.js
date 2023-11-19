@@ -41,7 +41,7 @@ const CategoryList = () => {
   useEffect(() => {
     dispatch(resetState());
     dispatch(getProductCategories());
-  }, []);
+  }, [dispatch]);
   const productCategoryState = useSelector(
     (state) => state.productCategory.productCategories
   );
