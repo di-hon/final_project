@@ -10,6 +10,7 @@ const {
 
 router.post("/", authMiddleware, isAdmin, createCoupon);
 router.get("/", authMiddleware, isAdmin, getCoupons);
+router.get("/:id", authMiddleware, isAdmin, getCoupons);
 router.put("/:id", authMiddleware, isAdmin, updateCoupon);
 router.delete("/:id", authMiddleware, isAdmin, deleteCoupon);
 

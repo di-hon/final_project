@@ -21,6 +21,7 @@ const AddBrand = () => {
   const navigate = useNavigate();
   const getBrandId = location.pathname.split("/")[3];
   const newBrand = useSelector((state) => state.brand);
+
   const {
     isSuccess,
     isError,
