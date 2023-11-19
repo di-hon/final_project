@@ -19,7 +19,7 @@ export const store = configureStore({
     brand: brandReducer,
     productCategory: productCategoryReducer,
     blogCategory: blogCategoryReducer,
-    blog: blogReducer,
+    blogs: blogReducer,
     color: colorReducer,
     enquiry: enquiryReducer,
     upload: uploadReducer,
