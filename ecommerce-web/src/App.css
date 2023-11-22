@@ -38,6 +38,11 @@ a {
   display: inline-block;
 }
 
+.error {
+  color: red;
+  font-size: 12px;
+}
+
 .form-control:focus{
   box-shadow: none;
   border-color: inherit;
