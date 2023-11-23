@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import ReactStars from "react-rating-stars-component";
 import ReactImageZoom from "react-image-zoom";
 import BreadCrumb from "../components/BreadCrumb";
@@ -8,9 +8,21 @@ import ProductCard from "../components/ProductCard";
 import { TbGitCompare } from "react-icons/tb";
 import { AiOutlineHeart } from "react-icons/ai";
 import Container from "../components/Container";
+import { useLocation } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
+import { getAProduct } from "../features/products/productSlice";
 
 const ProductDetail = () => {
+  const location = useLocation();
+  const getProductId = location.pathname.split("/")[2];
+  const dispatch = useDispatch();
+  const productState = useSelector((state) => state.product.singleProduct);
   const [orderedProduct, setOrderedProduct] = useState(true);
+
+  useEffect(() => {
+    dispatch(getAProduct(getProductId));
+  }, []);
+
   const copyToClipboard = (text) => {
     var textField = document.createElement("textarea");
     textField.innerText = text;
@@ -19,12 +31,16 @@ const ProductDetail = () => {
     document.execCommand("copy");
     textField.remove();
   };
+
   const props = {
     width: 400,
     height: 600,
     zoomWidth: 600,
-    img: "https://images.pexels.com/photos/190819/pexels-photo-190819.jpeg?cs=srgb&dl=pexels-fernando-arcos-190819.jpg&fm=jpg",
+    img: productState?.images[0]?.url
+      ? productState?.images[0]?.url
+      : "https://images.pexels.com/photos/190819/pexels-photo-190819.jpeg?cs=srgb&dl=pexels-fernando-arcos-190819.jpg&fm=jpg",
   };
+
   return (
     <>
       <Meta title={"Product Detail"} />
@@ -38,50 +54,27 @@ const ProductDetail = () => {
               </div>
             </div>
             <div className="other-product-images d-flex flex-wrap gap-15">
-              <div>
-                <img
-                  src="https://images.pexels.com/photos/190819/pexels-photo-190819.jpeg?cs=srgb&dl=pexels-fernando-arcos-190819.jpg&fm=jpg"
-                  className="img-fluid"
-                  alt=""
-                />
-              </div>
-              <div>
-                <img
-                  src="https://images.pexels.com/photos/190819/pexels-photo-190819.jpeg?cs=srgb&dl=pexels-fernando-arcos-190819.jpg&fm=jpg"
-                  className="img-fluid"
-                  alt=""
-                />
-              </div>
-              <div>
-                <img
-                  src="https://images.pexels.com/photos/190819/pexels-photo-190819.jpeg?cs=srgb&dl=pexels-fernando-arcos-190819.jpg&fm=jpg"
-                  className="img-fluid"
-                  alt=""
-                />
-              </div>
-              <div>
-                <img
-                  src="https://images.pexels.com/photos/190819/pexels-photo-190819.jpeg?cs=srgb&dl=pexels-fernando-arcos-190819.jpg&fm=jpg"
-                  className="img-fluid"
-                  alt=""
-                />
-              </div>
+              {productState?.images.map((item, index) => {
+                return (
+                  <div>
+                    <img src={item?.url} className="img-fluid" alt="" />
+                  </div>
+                );
+              })}
             </div>
           </div>
           <div className="col-6">
             <div className="product-details">
               <div className="border-bottom">
-                <h3 className="title">
-                  Kids watch bulk 10 pack multi colored for students
-                </h3>
+                <h3 className="title">{productState?.name}</h3>
               </div>
               <div className="border-bottom py-3">
-                <p className="price">$ 100</p>
+                <p className="price">$ {productState?.price}</p>
                 <div className="d-flex align-items-center gap-10">
                   <ReactStars
                     count={5}
                     size={24}
-                    value={4}
+                    value={productState?.total_rating.toString()}
                     edit={false}
                     activeColor="#ffd700"
                   />
@@ -98,15 +91,15 @@ const ProductDetail = () => {
                 </div>
                 <div className="d-flex gap-10 align-items-center my-2">
                   <h3 className="product-heading">Brand :</h3>
-                  <p className="product-data">Havels</p>
+                  <p className="product-data">{productState?.brand}</p>
                 </div>
                 <div className="d-flex gap-10 align-items-center my-2">
                   <h3 className="product-heading">Category :</h3>
-                  <p className="product-data">Watch</p>
+                  <p className="product-data">{productState?.category}</p>
                 </div>
                 <div className="d-flex gap-10 align-items-center my-2">
                   <h3 className="product-heading">Tags :</h3>
-                  <p className="product-data">Watch</p>
+                  <p className="product-data">{productState?.tags}</p>
                 </div>
                 <div className="d-flex gap-10 align-items-center my-2">
                   <h3 className="product-heading">Availability :</h3>
@@ -180,9 +173,7 @@ const ProductDetail = () => {
                   <a
                     href="javascript:void(0)"
                     onClick={() => {
-                      copyToClipboard(
-                        "https://images.pexels.com/photos/190819/pexels-photo-190819.jpeg?cs=srgb&dl=pexels-fernando-arcos-190819.jpg&fm=jpg"
-                      );
+                      copyToClipboard(window.location.href);
                     }}
                   >
                     Copy product <link rel="stylesheet" href="" />
@@ -198,12 +189,9 @@ const ProductDetail = () => {
           <div className="col-12">
             <h4>Description</h4>
             <div className="bg-white p-3">
-              <p>
-                Lorem ipsum dolor sit amet consectetur adipisicing elit.
-                Assumenda tempora ad in aperiam eos error, neque reiciendis
-                atque! Ipsam labore nihil ipsum eaque similique, a iusto nam
-                maiores quasi et.
-              </p>
+              <p
+                dangerouslySetInnerHTML={{ __html: productState?.description }}
+              ></p>
             </div>
           </div>
         </div>
