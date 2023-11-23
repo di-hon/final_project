@@ -73,7 +73,7 @@ const AddProduct = () => {
       setColor(null);
       setTimeout(() => {
         dispatch(resetState());
-      }, 3000);
+      }, 300);
     },
   });
   const [desc, setDesc] = useState();
