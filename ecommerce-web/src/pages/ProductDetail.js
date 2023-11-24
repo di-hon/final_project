@@ -11,8 +11,12 @@ import Container from "../components/Container";
 import { useLocation } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { getAProduct } from "../features/products/productSlice";
+import { toast } from "react-toastify";
+import { addToCart } from "../features/user/userSlice";
 
 const ProductDetail = () => {
+  const [color, setColor] = useState(null);
+  const [quantity, setQuantity] = useState(1);
   const location = useLocation();
   const getProductId = location.pathname.split("/")[2];
   const dispatch = useDispatch();
@@ -22,6 +26,22 @@ const ProductDetail = () => {
   useEffect(() => {
     dispatch(getAProduct(getProductId));
   }, []);
+
+  const addProductCart = () => {
+    if (color === null) {
+      toast.error("Please choose color!");
+      return false;
+    } else {
+      dispatch(
+        addToCart({
+          productId: productState?._id,
+          quantity,
+          color,
+          price: productState?.price,
+        })
+      );
+    }
+  };
 
   const copyToClipboard = (text) => {
     var textField = document.createElement("textarea");
@@ -124,7 +144,7 @@ const ProductDetail = () => {
                 </div>
                 <div className="d-flex gap-10 flex-column mt-2 mb-3">
                   <h3 className="product-heading">Color :</h3>
-                  <Color />
+                  <Color setColor={setColor} colorData={productState?.color} />
                 </div>
                 <div className="d-flex align-items-center gap-15 flex-row mt-2 mb-3">
                   <h3 className="product-heading">Quantity :</h3>
@@ -137,10 +157,18 @@ const ProductDetail = () => {
                       className="form-control"
                       style={{ width: "70px" }}
                       id=""
+                      onChange={(e) => setQuantity(e.target.value)}
+                      value={quantity}
                     />
                   </div>
                   <div className="d-flex align-items-center gap-30 ms-5">
-                    <button className="button border-0" type="submit">
+                    <button
+                      className="button border-0"
+                      type="submit"
+                      onClick={() => {
+                        addProductCart(productState?._id);
+                      }}
+                    >
                       Add to cart
                     </button>
                     <button className="button signup">Buy it now</button>
