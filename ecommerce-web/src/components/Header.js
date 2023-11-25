@@ -10,7 +10,7 @@ const Header = () => {
 
   useEffect(() => {
     let sum = 0;
-    for (let index = 0; index < cartState.length; index++) {
+    for (let index = 0; index < cartState?.length; index++) {
       sum =
         sum +
         Number(cartState[index]?.quantity * Number(cartState[index]?.price));
