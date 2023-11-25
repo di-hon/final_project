@@ -361,6 +361,39 @@ const getUserCart = asyncHandler(async (req, res) => {
   }
 });
 
+// REMOVE PRODUCT FROM CART
+const removeProductCart = asyncHandler(async (req, res) => {
+  const { _id } = req.user;
+  const { cartItemId } = req.params;
+  validateMongodbId(_id);
+  try {
+    const deletedProductCart = await Cart.deleteOne({
+      userId: _id,
+      _id: cartItemId,
+    });
+    res.json(deletedProductCart);
+  } catch (error) {
+    throw new Error(error);
+  }
+});
+
+const updateProductCartQuantity = asyncHandler(async (req, res) => {
+  const { _id } = req.user;
+  const { cartItemId, newQuantity } = req.params;
+  validateMongodbId(_id);
+  try {
+    const cartItem = await Cart.findOne({
+      userId: _id,
+      _id: cartItemId,
+    });
+    cartItem.quantity = newQuantity;
+    cartItem.save();
+    res.json(cartItem);
+  } catch (error) {
+    throw new Error(error);
+  }
+});
+
 // EMPTY CART
 const emptyCart = asyncHandler(async (req, res) => {
   const { _id } = req.user;
@@ -534,4 +567,6 @@ module.exports = {
   updateOrderStatus,
   getAllOrders,
   getOrderByUserId,
+  removeProductCart,
+  updateProductCartQuantity,
 };
