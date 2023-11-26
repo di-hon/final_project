@@ -12,7 +12,7 @@ import { loginUser } from "../features/user/userSlice";
 const logInSchema = yup.object({
   email: yup
     .string()
-    .email("Email should be valud")
+    .email("Email should be valid")
     .required("Email is required!"),
   password: yup.string().required("Password is required!"),
 });
@@ -24,10 +24,7 @@ const Login = () => {
 
   const formik = useFormik({
     initialValues: {
-      firstname: "",
-      lastname: "",
       email: "",
-      mobile: "",
       password: "",
     },
     validationSchema: logInSchema,

@@ -68,6 +68,37 @@ const createOrder = async (orderDetail) => {
   }
 };
 
+const getUserOrders = async () => {
+  const response = await axios.get(`${base_url}user/order`, config);
+  if (response.data) {
+    return response.data;
+  }
+};
+
+const editUser = async (data) => {
+  const response = await axios.put(`${base_url}user/edit-user`, data, config);
+  if (response.data) {
+    return response.data;
+  }
+};
+
+const forgetPassword = async (data) => {
+  const response = await axios.post(`${base_url}user/forget-password`, data);
+  if (response.data) {
+    return response.data;
+  }
+};
+
+const resetPassword = async (data) => {
+  const response = await axios.put(
+    `${base_url}user/reset-password/${data.token}`,
+    { password: data?.password }
+  );
+  if (response.data) {
+    return response.data;
+  }
+};
+
 export const authService = {
   register,
   login,
@@ -77,4 +108,8 @@ export const authService = {
   removeProductCart,
   updateProductCartQuantity,
   createOrder,
+  getUserOrders,
+  editUser,
+  forgetPassword,
+  resetPassword,
 };

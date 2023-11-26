@@ -1,13 +1,20 @@
 import React, { useEffect, useState } from "react";
-import { NavLink, Link } from "react-router-dom";
+import { NavLink, Link, useNavigate } from "react-router-dom";
 import { BsSearch } from "react-icons/bs";
 import { useDispatch, useSelector } from "react-redux";
+import { Typeahead } from "react-bootstrap-typeahead";
+import "react-bootstrap-typeahead/css/Typeahead.css";
+import { getAProduct } from "../features/products/productSlice";
 
 const Header = () => {
   const dispatch = useDispatch();
   const cartState = useSelector((state) => state?.auth?.userCart);
-  const authState = useSelector((state) => state.auth);
+  const authState = useSelector((state) => state?.auth);
+  const productState = useSelector((state) => state?.product?.product);
   const [total, setTotal] = useState(null);
+  const [paginate, setPaginate] = useState(true);
+  const [productOption, setProductOption] = useState([]);
+  const navigate = useNavigate();
 
   useEffect(() => {
     let sum = 0;
@@ -18,6 +25,15 @@ const Header = () => {
       setTotal(sum);
     }
   }, [cartState]);
+
+  useEffect(() => {
+    let data = [];
+    for (let index = 0; index < productState.length; index++) {
+      const element = productState[index];
+      data.push({ id: index, product: element?._id, name: element?.name });
+    }
+    setProductOption(data);
+  }, [productState]);
 
   return (
     <>
@@ -52,12 +68,18 @@ const Header = () => {
             </div>
             <div className="col-5">
               <div className="input-group">
-                <input
-                  type="text"
-                  className="form-control py-2"
+                <Typeahead
+                  id="pagination-example"
+                  onPaginate={() => console.log("Results paginated")}
+                  onChange={(selected) => {
+                    navigate(`/product/${selected[0]?.product}`);
+                    dispatch(getAProduct(selected[0]?.product));
+                  }}
+                  options={productOption}
+                  paginate={paginate}
+                  labelKey={"name"}
+                  minLength={2}
                   placeholder="Search product here..."
-                  aria-label="Search product here..."
-                  aria-describedby="basic-addon2"
                 />
                 <span className="input-group-text p-3" id="basic-addon2">
                   <BsSearch className="fs-6" />
@@ -67,7 +89,7 @@ const Header = () => {
             <div className="col-5">
               <div className="header-upper-links d-flex align-items-center justify-content-between">
                 <div>
-                  <Link
+                  {/* <Link
                     to="/compare-product"
                     className="d-flex align-items-center gap-10 text-white"
                   >
@@ -75,7 +97,7 @@ const Header = () => {
                     <p className="mb-0">
                       Compare <br /> products
                     </p>
-                  </Link>
+                  </Link> */}
                 </div>
                 <div>
                   <Link
@@ -90,7 +112,7 @@ const Header = () => {
                 </div>
                 <div>
                   <Link
-                    to={authState?.user === null ? "/login" : ""}
+                    to={authState?.user === null ? "/login" : "/profile"}
                     className="d-flex align-items-center gap-10 text-white"
                   >
                     <img src="/images/user.svg" alt="user" />
@@ -169,6 +191,7 @@ const Header = () => {
                   <div className="d-flex align-items-center gap-15">
                     <NavLink to="/">Home</NavLink>
                     <NavLink to="/product">Our store</NavLink>
+                    <NavLink to="/order">Orders</NavLink>
                     <NavLink to="/blogs">Blogs</NavLink>
                     <NavLink to="/contact">Contact</NavLink>
                   </div>

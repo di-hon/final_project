@@ -10,7 +10,11 @@ import { AiOutlineHeart } from "react-icons/ai";
 import Container from "../components/Container";
 import { useLocation, useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
-import { getAProduct } from "../features/products/productSlice";
+import {
+  addRating,
+  getAProduct,
+  getAllProducts,
+} from "../features/products/productSlice";
 import { toast } from "react-toastify";
 import { addToCart, getUserCart } from "../features/user/userSlice";
 
@@ -18,17 +22,22 @@ const ProductDetail = () => {
   const [color, setColor] = useState(null);
   const [quantity, setQuantity] = useState(1);
   const [alreadyAdded, setAlreadyAdded] = useState(false);
+  const [orderedProduct, setOrderedProduct] = useState(true);
+  const [popularProduct, setPopularProduct] = useState([]);
+  const [star, setStart] = useState(null);
+  const [comment, setComment] = useState(null);
   const location = useLocation();
   const navigate = useNavigate();
   const getProductId = location.pathname.split("/")[2];
   const dispatch = useDispatch();
-  const productState = useSelector((state) => state.product.singleProduct);
-  const [orderedProduct, setOrderedProduct] = useState(true);
-  const cartState = useSelector((state) => state.auth.userCart);
+  const productState = useSelector((state) => state?.product?.singleProduct);
+  const productsState = useSelector((state) => state?.product?.product);
+  const cartState = useSelector((state) => state?.auth?.userCart);
 
   useEffect(() => {
     dispatch(getAProduct(getProductId));
     dispatch(getUserCart());
+    dispatch(getAllProducts());
   }, []);
 
   useEffect(() => {
@@ -74,10 +83,39 @@ const ProductDetail = () => {
       : "https://images.pexels.com/photos/190819/pexels-photo-190819.jpeg?cs=srgb&dl=pexels-fernando-arcos-190819.jpg&fm=jpg",
   };
 
+  useEffect(() => {
+    let data = [];
+    for (let index = 0; index < productsState.length; index++) {
+      const element = productsState[index];
+      if (element.tags === "popular") {
+        data.push(element);
+      }
+      setPopularProduct(data);
+    }
+  }, [productsState]);
+
+  const addReview = () => {
+    if (star === null) {
+      toast.error("Please add star rating!");
+      return false;
+    } else if (comment === null) {
+      toast.error("Please add comment!");
+      return false;
+    } else {
+      dispatch(
+        addRating({ star: star, comment: comment, productId: getProductId })
+      );
+      setTimeout(() => {
+        dispatch(getAProduct(getProductId));
+      }, 300);
+    }
+    return false;
+  };
+
   return (
     <>
       <Meta title={"Product Detail"} />
-      <BreadCrumb title="Product Detail" />
+      <BreadCrumb title={productState?.name} />
       <Container class1="product-detail-wrapper py-5 home-wrapper-2">
         <div className="row">
           <div className="col-6">
@@ -283,50 +321,60 @@ const ProductDetail = () => {
               </div>
               <div className="review-form py-4">
                 <h4>Write a review</h4>
-                <form action="" className="d-flex flex-column gap-15">
-                  <div>
-                    <ReactStars
-                      count={5}
-                      size={24}
-                      value={4}
-                      edit={true}
-                      activeColor="#ffd700"
-                    />
-                  </div>
-                  <div>
-                    <textarea
-                      name=""
-                      id=""
-                      className="w-100 form-control"
-                      cols="30"
-                      rows="4"
-                      placeholder="Comments"
-                    ></textarea>
-                  </div>
-                  <div className="d-flex justify-content-end">
-                    <button className="button border-0">Submit review</button>
-                  </div>
-                </form>
+                <div>
+                  <ReactStars
+                    count={5}
+                    size={24}
+                    value={0}
+                    edit={true}
+                    activeColor="#ffd700"
+                    onChange={(e) => {
+                      setStart(e);
+                    }}
+                  />
+                </div>
+                <div>
+                  <textarea
+                    name=""
+                    id=""
+                    className="w-100 form-control"
+                    cols="30"
+                    rows="4"
+                    placeholder="Comments"
+                    onChange={(e) => {
+                      setComment(e.target.value);
+                    }}
+                  ></textarea>
+                </div>
+                <div className="d-flex justify-content-end">
+                  <button
+                    onClick={addReview}
+                    type="submit"
+                    className="button border-0"
+                  >
+                    Submit review
+                  </button>
+                </div>
               </div>
               <div className="reviews mt-4">
-                <div className="review">
-                  <div className="d-flex gap-10 align-items-center">
-                    <h6 className="mb-0">Navdeep</h6>
-                    <ReactStars
-                      count={5}
-                      size={24}
-                      value={4}
-                      edit={false}
-                      activeColor="#ffd700"
-                    />
-                  </div>
-                  <p className="mt-3">
-                    Lorem, ipsum dolor sit amet consectetur adipisicing elit.
-                    Rerum adipisci quis possimus nihil! Itaque vitae minus
-                    earum, exercitationem, voluptates est nisi quo quisquam
-                    mollitia aliquam ullam ab ducimus labore expedita?
-                  </p>
-                </div>
+                {productState &&
+                  productState?.ratings?.map((item, index) => {
+                    return (
+                      <div key={index} className="review">
+                        <div className="d-flex gap-10 align-items-center">
+                          <h6 className="mb-0">Navdeep</h6>
+                          <ReactStars
+                            count={5}
+                            size={24}
+                            value={item?.star}
+                            edit={false}
+                            activeColor="#ffd700"
+                          />
+                        </div>
+                        <p className="mt-3">{item?.comment}</p>
+                      </div>
+                    );
+                  })}
               </div>
             </div>
           </div>
@@ -339,7 +387,7 @@ const ProductDetail = () => {
           </div>
         </div>
         <div className="row">
-          <ProductCard />
+          <ProductCard data={popularProduct} />
         </div>
       </Container>
     </>

@@ -21,7 +21,7 @@ const {
   // emptyCart,
   // applyCoupon,
   createOrder,
-  // getOrders,
+  getOrders,
   // updateOrderStatus,
   // getAllOrders,
   // getOrderByUserId,
@@ -48,7 +48,7 @@ router.post("/order/payment-verification", authMiddleware, paymentVerification);
 // router.post("/cart/apply-coupon", authMiddleware, applyCoupon);
 router.post("/cart/create-order", authMiddleware, createOrder);
 router.get("/all-users", getUsers);
-// router.get("/order", authMiddleware, getOrders);
+router.get("/order", authMiddleware, getOrders);
 // router.get("/all-orders", authMiddleware, isAdmin, getAllOrders);
 // router.post("/order-user/:id", authMiddleware, isAdmin, getOrderByUserId);
 router.get("/refresh", handleRefreshToken);
