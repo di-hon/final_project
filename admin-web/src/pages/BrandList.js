@@ -3,9 +3,12 @@ import { Table } from "antd";
 import { BiEdit } from "react-icons/bi";
 import { AiFillDelete } from "react-icons/ai";
 import { useDispatch, useSelector } from "react-redux";
-import { deleteBrand, getBrands } from "../features/brand/brandSlice";
+import {
+  deleteBrand,
+  getBrands,
+  resetState,
+} from "../features/brand/brandSlice";
 import { Link } from "react-router-dom";
-import { resetState } from "../features/blog/blogSlice";
 import CustomModal from "../components/CustomModal";
 
 const columns = [
@@ -23,22 +26,27 @@ const columns = [
     dataIndex: "action",
   },
 ];
+
 const BrandList = () => {
   const [open, setOpen] = useState(false);
   const [brandId, setBrandId] = useState("");
+  const dispatch = useDispatch();
+  const brandState = useSelector((state) => state.brand.brands);
+
   const showModal = (e) => {
     setOpen(true);
     setBrandId(e);
   };
+
   const hideModal = () => {
     setOpen(false);
   };
-  const dispatch = useDispatch();
+
   useEffect(() => {
     dispatch(resetState());
     dispatch(getBrands());
-  }, [dispatch]);
-  const brandState = useSelector((state) => state.brand.brands);
+  }, []);
+
   const data1 = [];
   for (let i = 0; i < brandState.length; i++) {
     data1.push({
@@ -62,6 +70,7 @@ const BrandList = () => {
       ),
     });
   }
+
   const deleteABrand = (e) => {
     dispatch(deleteBrand(e));
 
@@ -70,6 +79,7 @@ const BrandList = () => {
       dispatch(getBrands());
     }, 100);
   };
+
   return (
     <div>
       <h3 className="mb-4 title">Brand List</h3>

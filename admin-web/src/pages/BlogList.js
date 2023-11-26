@@ -29,19 +29,23 @@ const columns = [
 const BlogList = () => {
   const [open, setOpen] = useState(false);
   const [blogId, setBlogId] = useState("");
+  const blogState = useSelector((state) => state.blogs.blogs);
+  const dispatch = useDispatch();
+
   const showModal = (e) => {
     setOpen(true);
     setBlogId(e);
   };
+
   const hideModal = () => {
     setOpen(false);
   };
-  const dispatch = useDispatch();
+
   useEffect(() => {
     dispatch(resetState());
     dispatch(getBlogs());
   }, [dispatch]);
-  const blogState = useSelector((state) => state.blogs.blogs);
+
   const data1 = [];
   for (let i = 0; i < blogState.length; i++) {
     data1.push({
