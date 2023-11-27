@@ -83,7 +83,7 @@ const Cart = () => {
                         />
                       </div>
                       <div className="w-75">
-                        <p>{item?.productId.name}</p>
+                        <p>{item?.productId?.name}</p>
                         <p className="d-flex gap-3">
                           Color:
                           <ul className="colors ps-0">

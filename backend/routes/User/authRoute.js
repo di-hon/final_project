@@ -21,12 +21,14 @@ const {
   // emptyCart,
   // applyCoupon,
   createOrder,
-  getOrders,
-  // updateOrderStatus,
-  // getAllOrders,
-  // getOrderByUserId,
+  updateOrderStatus,
   removeProductCart,
   updateProductCartQuantity,
+  getYearlyTotalOrders,
+  getMonthlyOrder,
+  getUserOrders,
+  getOrders,
+  getOrderDetails,
 } = require("../../controllers/User/userController");
 const { authMiddleware, isAdmin } = require("../../middlewares/authMiddleware");
 const {
@@ -48,9 +50,11 @@ router.post("/order/payment-verification", authMiddleware, paymentVerification);
 // router.post("/cart/apply-coupon", authMiddleware, applyCoupon);
 router.post("/cart/create-order", authMiddleware, createOrder);
 router.get("/all-users", getUsers);
-router.get("/order", authMiddleware, getOrders);
-// router.get("/all-orders", authMiddleware, isAdmin, getAllOrders);
-// router.post("/order-user/:id", authMiddleware, isAdmin, getOrderByUserId);
+router.get("/user-order", authMiddleware, getUserOrders);
+router.get("/get-monthly-orders", authMiddleware, isAdmin, getMonthlyOrder);
+router.get("/get-yearly-orders", authMiddleware, isAdmin, getYearlyTotalOrders);
+router.get("/all-orders", authMiddleware, isAdmin, getOrders);
+router.get("/order-details/:id", authMiddleware, isAdmin, getOrderDetails);
 router.get("/refresh", handleRefreshToken);
 router.get("/logout", logout);
 router.get("/wishlist", authMiddleware, getWishlist);
@@ -67,16 +71,17 @@ router.delete(
   authMiddleware,
   updateProductCartQuantity
 );
+
 router.delete("/:id", deleteUser);
 router.put("/edit-user", authMiddleware, updateUser);
 router.put("/save-address", authMiddleware, saveAddress);
 router.put("/block-user/:id", authMiddleware, isAdmin, blockUser);
 router.put("/unblock-user/:id", authMiddleware, isAdmin, unblockUser);
-// router.put(
-//   "/order/order-status/:id",
-//   authMiddleware,
-//   isAdmin,
-//   updateOrderStatus
-// );
+router.put(
+  "/order/order-status/:id",
+  authMiddleware,
+  isAdmin,
+  updateOrderStatus
+);
 
 module.exports = router;

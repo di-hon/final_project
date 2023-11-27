@@ -1,4 +1,4 @@
-const Enquiry = require("../../models/User/enquiryModel");
+const Enquiry = require("../../models/User/enquiryModel.js");
 const asyncHandler = require("express-async-handler");
 const validateMongodbId = require("../../utils/validateMongodbId.js");
 
