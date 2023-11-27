@@ -77,7 +77,7 @@ const ProductList = () => {
       price: `${productState[i].price}`,
       action: (
         <>
-          <Link className="fs-3 text-danger" to="/">
+          <Link className="fs-3 text-danger">
             <BiEdit />
           </Link>
           <button
