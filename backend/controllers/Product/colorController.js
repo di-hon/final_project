@@ -38,6 +38,7 @@ const deleteColor = asyncHandler(async (req, res) => {
   }
 });
 
+//GET ONE COLOR
 const getOneColor = asyncHandler(async (req, res) => {
   try {
     const { id } = req.params;
@@ -49,6 +50,7 @@ const getOneColor = asyncHandler(async (req, res) => {
   }
 });
 
+// GET ALL COLORS
 const getColors = asyncHandler(async (req, res) => {
   try {
     const getColors = await Color.find();

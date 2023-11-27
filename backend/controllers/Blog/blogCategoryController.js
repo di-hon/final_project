@@ -42,6 +42,7 @@ const deleteBlogCategory = asyncHandler(async (req, res) => {
   }
 });
 
+// GET ONE BLOG CATEGORY
 const getOneBlogCategory = asyncHandler(async (req, res) => {
   try {
     const { id } = req.params;
@@ -53,6 +54,7 @@ const getOneBlogCategory = asyncHandler(async (req, res) => {
   }
 });
 
+// GET ALL BLOG CATEGORIES
 const getBlogCategories = asyncHandler(async (req, res) => {
   try {
     const getBlogCategories = await blogCategory.find();

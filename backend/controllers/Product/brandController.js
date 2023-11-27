@@ -38,6 +38,7 @@ const deleteBrand = asyncHandler(async (req, res) => {
   }
 });
 
+// GET ONE BRAND
 const getOneBrand = asyncHandler(async (req, res) => {
   try {
     const { id } = req.params;
@@ -49,6 +50,7 @@ const getOneBrand = asyncHandler(async (req, res) => {
   }
 });
 
+// GET ALL BRANDS
 const getBrands = asyncHandler(async (req, res) => {
   try {
     const getBrands = await Brand.find();

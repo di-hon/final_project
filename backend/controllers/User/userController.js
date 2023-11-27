@@ -377,6 +377,19 @@ const removeProductCart = asyncHandler(async (req, res) => {
   }
 });
 
+// EMPTY CART AFTER CREATE ORDER
+const emptyCart = asyncHandler(async (req, res) => {
+  const { _id } = req.user;
+  validateMongodbId(_id);
+  try {
+    const deleteCart = await Cart.deleteMany({ userId: _id });
+    res.json(deleteCart);
+  } catch (error) {
+    throw new Error(error);
+  }
+});
+
+// UPDATE PRODUCT QUANTITY IN CART
 const updateProductCartQuantity = asyncHandler(async (req, res) => {
   const { _id } = req.user;
   const { cartItemId, newQuantity } = req.params;
@@ -394,6 +407,7 @@ const updateProductCartQuantity = asyncHandler(async (req, res) => {
   }
 });
 
+// CREATE ORDER
 const createOrder = asyncHandler(async (req, res) => {
   const {
     deliveryInfo,
@@ -421,6 +435,7 @@ const createOrder = asyncHandler(async (req, res) => {
   }
 });
 
+// GET USER ORDERS
 const getUserOrders = asyncHandler(async (req, res) => {
   const { _id } = req.user;
   try {
@@ -436,6 +451,7 @@ const getUserOrders = asyncHandler(async (req, res) => {
   }
 });
 
+// GET ALL ORDERS
 const getOrders = asyncHandler(async (req, res) => {
   try {
     const orders = await Order.find().populate("user");
@@ -447,6 +463,7 @@ const getOrders = asyncHandler(async (req, res) => {
   }
 });
 
+// GET ORDER DETAIL
 const getOrderDetails = asyncHandler(async (req, res) => {
   const { id } = req.params;
   try {
@@ -461,6 +478,7 @@ const getOrderDetails = asyncHandler(async (req, res) => {
   }
 });
 
+// UPDATE ORDER STATUS
 const updateOrderStatus = asyncHandler(async (req, res) => {
   const { id } = req.params;
   try {
@@ -476,6 +494,7 @@ const updateOrderStatus = asyncHandler(async (req, res) => {
   }
 });
 
+// GET MONTHLY ORDERS
 const getMonthlyOrder = asyncHandler(async (req, res) => {
   let monthNames = [
     "January",
@@ -524,6 +543,7 @@ const getMonthlyOrder = asyncHandler(async (req, res) => {
   res.json(data);
 });
 
+// GET YEARLY ORDERS
 const getYearlyTotalOrders = asyncHandler(async (req, res) => {
   let monthNames = [
     "January",
@@ -589,14 +609,13 @@ module.exports = {
   saveAddress,
   addToCart,
   getUserCart,
-  // emptyCart,
+  emptyCart,
   // applyCoupon,
   createOrder,
   getUserOrders,
   getOrders,
   getOrderDetails,
   updateOrderStatus,
-  // getOrderByUserId,
   removeProductCart,
   updateProductCartQuantity,
   getMonthlyOrder,

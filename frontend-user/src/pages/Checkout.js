@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { BiArrowBack } from "react-icons/bi";
 import watch from "../images/watch.jpg";
 import Container from "../components/Container";
@@ -8,7 +8,12 @@ import { useFormik } from "formik";
 import * as yup from "yup";
 import axios from "axios";
 import { config } from "../utils/axiosConfig";
-import { createOrder } from "../features/user/userSlice";
+import {
+  createOrder,
+  deleteUserCart,
+  getUserCart,
+  resetState,
+} from "../features/user/userSlice";
 
 const deliverySchema = yup.object({
   firstName: yup.string().required("First name is required!"),
@@ -21,13 +26,11 @@ const deliverySchema = yup.object({
 
 const Checkout = () => {
   const dispatch = useDispatch();
+  const navigate = useNavigate();
   const cartState = useSelector((state) => state.auth.userCart);
+  const authState = useSelector((state) => state.auth);
   const [totalAmount, setTotalAmount] = useState(null);
   const [deliveryInfo, setDeliveryInfo] = useState(null);
-  const [paymentInfo, setPaymentInfo] = useState({
-    razorpayPaymentId: "",
-    razorpayOrderId: "",
-  });
   const [cartProductState, setCartProductState] = useState([]);
 
   useEffect(() => {
@@ -37,6 +40,19 @@ const Checkout = () => {
       setTotalAmount(sum);
     }
   }, [cartState]);
+
+  useEffect(() => {
+    dispatch(getUserCart(config));
+  }, []);
+
+  useEffect(() => {
+    if (
+      authState?.orderedProduct !== null &&
+      authState?.orderedProduct?.success === true
+    ) {
+      navigate("/order");
+    }
+  }, [authState]);
 
   const formik = useFormik({
     initialValues: {
@@ -51,14 +67,12 @@ const Checkout = () => {
     validationSchema: deliverySchema,
     onSubmit: (values) => {
       setDeliveryInfo(values);
+      localStorage.setItem("address", JSON.stringify(values));
       setTimeout(() => {
         checkOutHandler();
       }, 300);
     },
   });
-
-  console.log(paymentInfo);
-  console.log(deliveryInfo);
 
   const loadScript = (src) => {
     return new Promise((resolve) => {
@@ -127,20 +141,21 @@ const Checkout = () => {
           config
         );
 
-        setPaymentInfo({
-          razorpayPaymentId: response.razorpay_payment_id,
-          razorpayOrderId: response.razorpay_order_id,
-        });
+        console.log(result?.data);
 
         dispatch(
           createOrder({
             totalPrice: totalAmount,
             totalPriceAfterDiscount: totalAmount,
             orderItems: cartProductState,
-            paymentInfo,
-            deliveryInfo,
+            paymentInfo: result?.data,
+            deliveryInfo: JSON.parse(localStorage.getItem("address")),
           })
         );
+
+        dispatch(deleteUserCart());
+        localStorage.removeItem("address");
+        dispatch(resetState());
       },
 
       prefill: {

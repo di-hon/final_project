@@ -18,7 +18,7 @@ const {
   saveAddress,
   addToCart,
   getUserCart,
-  // emptyCart,
+  emptyCart,
   // applyCoupon,
   createOrder,
   updateOrderStatus,
@@ -60,7 +60,7 @@ router.get("/logout", logout);
 router.get("/wishlist", authMiddleware, getWishlist);
 router.get("/cart", authMiddleware, getUserCart);
 router.get("/:id", authMiddleware, isAdmin, getOneUser);
-// router.delete("/empty-cart", authMiddleware, emptyCart);
+router.delete("/empty-cart", authMiddleware, emptyCart);
 router.delete(
   "/delete-product-cart/:cartItemId",
   authMiddleware,

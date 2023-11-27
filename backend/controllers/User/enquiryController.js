@@ -38,6 +38,7 @@ const deleteEnquiry = asyncHandler(async (req, res) => {
   }
 });
 
+// GET ONE ENQUIRY
 const getOneEnquiry = asyncHandler(async (req, res) => {
   try {
     const { id } = req.params;
@@ -49,6 +50,7 @@ const getOneEnquiry = asyncHandler(async (req, res) => {
   }
 });
 
+//GET ALL ENQUIRIES
 const getEnquiries = asyncHandler(async (req, res) => {
   try {
     const getEnquiries = await Enquiry.find();

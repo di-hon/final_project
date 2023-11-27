@@ -5,6 +5,7 @@ const instance = new Razorpay({
   key_secret: "fS1hdzXCseCWe12XC4MAkQDt",
 });
 
+// CHECKOUT
 const checkout = async (req, res) => {
   const { amount } = req.body;
   const option = {
@@ -18,6 +19,7 @@ const checkout = async (req, res) => {
   });
 };
 
+// VERIFY PAYMENT
 const paymentVerification = async (req, res) => {
   const { razorpayOrderId, razorpayPaymentId } = req.body;
   res.json({

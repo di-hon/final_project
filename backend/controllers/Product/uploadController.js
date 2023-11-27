@@ -26,6 +26,7 @@ const uploadProductImage = asyncHandler(async (req, res) => {
   }
 });
 
+// DELETE PRODUCT IMAGE
 const deleteProductImage = asyncHandler(async (req, res) => {
   const { id } = req.params;
   try {

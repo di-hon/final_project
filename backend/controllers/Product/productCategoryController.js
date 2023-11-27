@@ -42,6 +42,7 @@ const deleteProductCategory = asyncHandler(async (req, res) => {
   }
 });
 
+// GET ONE PRODUCT CATEGORY
 const getOneProductCategory = asyncHandler(async (req, res) => {
   try {
     const { id } = req.params;
@@ -53,6 +54,7 @@ const getOneProductCategory = asyncHandler(async (req, res) => {
   }
 });
 
+// GET ALL PRODUCT CATEGORIES
 const getProductCategories = asyncHandler(async (req, res) => {
   try {
     const getProductCategories = await productCategory.find();

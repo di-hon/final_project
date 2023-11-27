@@ -22,6 +22,7 @@ const getCoupons = asyncHandler(async (req, res) => {
   }
 });
 
+//GET ONE COUPON
 const getCoupon = asyncHandler(async (req, res) => {
   const { id } = req.params;
   validateMongoDbId(id);

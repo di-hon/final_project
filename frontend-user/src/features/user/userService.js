@@ -69,7 +69,7 @@ const createOrder = async (orderDetail) => {
 };
 
 const getUserOrders = async () => {
-  const response = await axios.get(`${base_url}user/order`, config);
+  const response = await axios.get(`${base_url}user/user-order`, config);
   if (response.data) {
     return response.data;
   }
@@ -99,6 +99,13 @@ const resetPassword = async (data) => {
   }
 };
 
+const emptyCart = async () => {
+  const response = await axios.delete(`${base_url}user/empty-cart`, config);
+  if (response.data) {
+    return response.data;
+  }
+};
+
 export const authService = {
   register,
   login,
@@ -112,4 +119,5 @@ export const authService = {
   editUser,
   forgetPassword,
   resetPassword,
+  emptyCart,
 };
