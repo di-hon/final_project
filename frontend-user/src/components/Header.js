@@ -68,7 +68,7 @@ const Header = () => {
             <div className="col-2">
               <h2>
                 <Link to="/" className="text-white">
-                  Dev Corner
+                  Di Hon Shop
                 </Link>
               </h2>
             </div>
