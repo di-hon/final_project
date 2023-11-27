@@ -8,6 +8,7 @@ import CustomInput from "../components/CustomInput";
 import { useFormik } from "formik";
 import * as yup from "yup";
 import { loginUser } from "../features/user/userSlice";
+import { useEffect } from "react";
 
 const logInSchema = yup.object({
   email: yup
@@ -30,9 +31,14 @@ const Login = () => {
     validationSchema: logInSchema,
     onSubmit: (values) => {
       dispatch(loginUser(values));
-      navigate("/");
     },
   });
+
+  useEffect(() => {
+    if (authState.user !== null && authState.isError === false) {
+      navigate("/");
+    }
+  }, [authState]);
 
   return (
     <>

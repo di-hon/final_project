@@ -170,7 +170,7 @@ export const authSlice = createSlice({
         state.isSuccess = false;
         state.message = action.error;
         if (state.isError === true) {
-          toast.error(action.error);
+          toast.error(action.payload.response.data.message);
         }
       })
       .addCase(loginUser.pending, (state) => {
@@ -180,7 +180,7 @@ export const authSlice = createSlice({
         state.isLoading = false;
         state.isError = false;
         state.isSuccess = true;
-        state.loginedUser = action.payload;
+        state.user = action.payload;
         if (state.isSuccess === true) {
           localStorage.setItem("token", action.payload.token);
           toast.info("Login successfully!");
@@ -192,7 +192,7 @@ export const authSlice = createSlice({
         state.isSuccess = false;
         state.message = action.error;
         if (state.isError === true) {
-          toast.error(action.error);
+          toast.error(action.payload.response.data.message);
         }
       })
       .addCase(getUserProductWishlist.pending, (state) => {
@@ -329,9 +329,18 @@ export const authSlice = createSlice({
         state.isError = false;
         state.isSuccess = true;
         state.updatedUser = action.payload;
-        if (state.isSuccess) {
-          toast.success("Profile updated successfully!");
-        }
+        let currentUserData = JSON.parse(localStorage.getItem("customer"));
+        let newUserData = {
+          _id: currentUserData?._id,
+          token: currentUserData?.token,
+          firstname: action?.payload?.firstname,
+          lastname: action?.payload?.lastname,
+          email: action?.payload?.email,
+          mobile: action?.payload?.mobile,
+        };
+        localStorage.setItem("customer", JSON.stringify(newUserData));
+        state.user = newUserData;
+        toast.success("Profile updated successfully!");
       })
       .addCase(editProfile.rejected, (state, action) => {
         state.isLoading = false;
