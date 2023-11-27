@@ -7,15 +7,17 @@ import {
   AiOutlinePicLeft,
   AiOutlinePicRight,
 } from "react-icons/ai";
-import { RiCouponLine } from "react-icons/ri";
-import { ToastContainer } from "react-toastify";
-import "react-toastify/dist/ReactToastify.css";
-import { IoIosNotifications } from "react-icons/io";
-import { Link, Outlet } from "react-router-dom";
 import { SiBrandfolder } from "react-icons/si";
 import { BiCategoryAlt } from "react-icons/bi";
 import { FaClipboardList, FaBloggerB } from "react-icons/fa";
 import { ImBlog } from "react-icons/im";
+import { RiCouponLine } from "react-icons/ri";
+import { IoIosNotifications } from "react-icons/io";
+import { FiLogOut } from "react-icons/fi";
+import { ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+import { Link, Outlet } from "react-router-dom";
+
 import { Layout, Menu, Button, theme } from "antd";
 import { useNavigate } from "react-router-dom";
 
@@ -40,7 +42,9 @@ const MainLayout = () => {
           mode="inline"
           defaultSelectedKeys={[""]}
           onClick={({ key }) => {
-            if (key == "logout") {
+            if (key === "logout") {
+              localStorage.clear();
+              window.location.reload();
             } else {
               navigate(key);
             }
@@ -156,6 +160,11 @@ const MainLayout = () => {
               key: "enquiries",
               icon: <FaClipboardList className="fs-4" />,
               label: "Enquiries",
+            },
+            {
+              key: "logout",
+              icon: <FiLogOut className="fs-4" />,
+              label: "Log out",
             },
           ]}
         />

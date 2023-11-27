@@ -1,8 +1,6 @@
 import "./App.css";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import Login from "./pages/Login";
-import ResetPassword from "./pages/ResetPassword";
-import ForgetPassword from "./pages/ForgetPassword";
 import MainLayout from "./components/MainLayout";
 import Dashboard from "./pages/Dashboard";
 import Enquiries from "./pages/Enquiries";
@@ -24,16 +22,30 @@ import AddCoupon from "./pages/AddCoupon";
 import CouponList from "./pages/CouponList";
 import ViewEnquiry from "./pages/ViewEnquiry";
 import ViewOrder from "./pages/ViewOrder";
+import { PrivateRoutes } from "./routing/PrivateRoutes";
+import { OpenRoutes } from "./routing/OpenRoutes";
 
 function App() {
   return (
     <div className="App">
       <Router>
         <Routes>
-          <Route path="/" element={<Login />} />
-          <Route path="/reset-password" element={<ResetPassword />} />
-          <Route path="/forget-password" element={<ForgetPassword />} />
-          <Route path="/admin" element={<MainLayout />}>
+          <Route
+            path="/"
+            element={
+              <OpenRoutes>
+                <Login />
+              </OpenRoutes>
+            }
+          />
+          <Route
+            path="/admin"
+            element={
+              <PrivateRoutes>
+                <MainLayout />
+              </PrivateRoutes>
+            }
+          >
             <Route index element={<Dashboard />} />
             <Route path="enquiries" element={<Enquiries />} />
             <Route path="enquiries/:id" element={<ViewEnquiry />} />
