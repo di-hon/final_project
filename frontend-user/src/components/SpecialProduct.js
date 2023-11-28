@@ -22,19 +22,8 @@ const SpecialProduct = (props) => {
               activeColor="#ffd700"
             />
             <p className="price">
-              <span className="red-p">$ {price}</span> &nbsp;{" "}
-              {/* <strike>$200</strike> */}
+              <span className="red-p">INR {price}</span> &nbsp;{" "}
             </p>
-            {/* <div className="discount-till d-flex align-items-center gap-10">
-              <p className="mb-0">
-                <b>5 </b>days
-              </p>
-              <div className="d-flex gap-10 align-items-center">
-                <span className="badge rounded-circle p-3 bg-danger">1</span>:
-                <span className="badge rounded-circle p-3 bg-danger">1</span>:
-                <span className="badge rounded-circle p-3 bg-danger">1</span>
-              </div>
-            </div> */}
             <div className="prod-count my-3">
               <p>Product: {quantity}</p>
               <div className="progress">

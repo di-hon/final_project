@@ -2,7 +2,7 @@ const Enquiry = require("../../models/User/enquiryModel.js");
 const asyncHandler = require("express-async-handler");
 const validateMongodbId = require("../../utils/validateMongodbId.js");
 
-// CREATE CATEGORY
+// CREATE ENQUIRY
 const createEnquiry = asyncHandler(async (req, res) => {
   try {
     const newEnquiry = await Enquiry.create(req.body);
@@ -12,7 +12,7 @@ const createEnquiry = asyncHandler(async (req, res) => {
   }
 });
 
-// UPDATE CATEGORY
+// UPDATE ENQUIRY
 const updateEnquiry = asyncHandler(async (req, res) => {
   try {
     const { id } = req.params;
@@ -26,7 +26,7 @@ const updateEnquiry = asyncHandler(async (req, res) => {
   }
 });
 
-// DELETE CATEGORY
+// DELETE ENQUIRY
 const deleteEnquiry = asyncHandler(async (req, res) => {
   try {
     const { id } = req.params;

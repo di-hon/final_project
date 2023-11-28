@@ -4,7 +4,6 @@ import { useDispatch, useSelector } from "react-redux";
 import { Link, useNavigate } from "react-router-dom";
 import Marquee from "react-fast-marquee";
 import BlogCard from "../components/BlogCard";
-import ProductCard from "../components/ProductCard";
 import SpecialProduct from "../components/SpecialProduct";
 import Container from "../components/Container";
 import { services } from "../utils/Data";
@@ -55,7 +54,7 @@ const Home = () => {
               <div className="main-banner-content position-absolute">
                 <h4>SUPERCHARGED FOR PROS.</h4>
                 <h5>iPAD S13+ Pro.</h5>
-                <p>From $999.00 or $41.62/mo.</p>
+                <p>From INR 999.00 or INR 41.62/mo.</p>
                 <Link className="button">BUY NOW</Link>
               </div>
             </div>
@@ -72,7 +71,7 @@ const Home = () => {
                   <h4>BEST SALE</h4>
                   <h5>iPAD S13+ Pro.</h5>
                   <p>
-                    From $999.00 <br /> or $41.62/mo.
+                    From INR 999.00 <br /> or INR 41.62/mo.
                   </p>
                 </div>
               </div>
@@ -86,7 +85,7 @@ const Home = () => {
                   <h4>NEW ARRIVAL</h4>
                   <h5>Buy Ipad Air</h5>
                   <p>
-                    From $999.00 <br /> or $41.62/mo.
+                    From INR 999.00 <br /> or INR 41.62/mo.
                   </p>
                 </div>
               </div>
@@ -100,7 +99,7 @@ const Home = () => {
                   <h4>NEW ARRIVAL</h4>
                   <h5>Buy Ipad Air</h5>
                   <p>
-                    From $999.00 <br /> or $41.62/mo.
+                    From INR 999.00 <br /> or INR 41.62/mo.
                   </p>
                 </div>
               </div>
@@ -114,7 +113,7 @@ const Home = () => {
                   <h4>NEW ARRIVAL</h4>
                   <h5>Buy Ipad Air</h5>
                   <p>
-                    From $999.00 <br /> or $41.62/mo.
+                    From INR 999.00 <br /> or INR 41.62/mo.
                   </p>
                 </div>
               </div>
@@ -253,7 +252,7 @@ const Home = () => {
                           activeColor="#ffd700"
                         />
 
-                        <p className="price">$ {item?.price}</p>
+                        <p className="price">INR {item?.price}</p>
                       </div>
                       <div className="action-bar position-absolute">
                         <div className="d-flex flex-column gap-15">
@@ -291,7 +290,7 @@ const Home = () => {
               <div className="famous-content position-absolute">
                 <h5>big screen</h5>
                 <h6>Smartwatch Series 7</h6>
-                <p>From $399 pr $16.66/mo. for 24 mo.*</p>
+                <p>From INR 3998 pr INR 160.66/mo. for 24 mo.*</p>
               </div>
             </div>
           </div>
@@ -320,8 +319,8 @@ const Home = () => {
                 <h5 className="text-dark">Smartphone</h5>
                 <h6 className="text-dark">Smartphone 15 Pro</h6>
                 <p className="text-dark">
-                  Now in grey. From 999$ or $41.62/mo <br /> for 24 mo.
-                  Footnote*
+                  Now in grey. From INR 10.999 or INR 4100.62/mo <br /> for 24
+                  mo. Footnote*
                 </p>
               </div>
             </div>
@@ -336,7 +335,9 @@ const Home = () => {
               <div className="famous-content position-absolute">
                 <h5 className="text-dark">bluetooth speaker</h5>
                 <h6 className="text-dark">Room-filling sound</h6>
-                <p className="text-dark">From $699 or $116.58/mo. for 12mo*</p>
+                <p className="text-dark">
+                  From INR 6999 or INR 1165.58/mo. for 12mo*
+                </p>
               </div>
             </div>
           </div>
@@ -418,7 +419,7 @@ const Home = () => {
                           activeColor="#ffd700"
                         />
 
-                        <p className="price">$ {item?.price}</p>
+                        <p className="price">INR {item?.price}</p>
                       </div>
                       <div className="action-bar position-absolute">
                         <div className="d-flex flex-column gap-15">

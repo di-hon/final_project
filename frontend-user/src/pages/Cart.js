@@ -126,7 +126,7 @@ const Cart = () => {
                     </div>
                     <div className="cart-col-4">
                       <h5 className="price">
-                        $ {item?.price * item?.quantity}
+                        INR {item?.price * item?.quantity}
                       </h5>
                     </div>
                   </div>
@@ -140,7 +140,7 @@ const Cart = () => {
               </Link>
               {(totalAmount !== null || totalAmount !== 0) && (
                 <div className="d-flex flex-column align-items-end">
-                  <h4>SubTotal: $ {totalAmount}</h4>
+                  <h4>SubTotal: INR {totalAmount}</h4>
                   <p>Taxes and shipping calculated at checkout</p>
                   <Link to="/checkout" className="button">
                     Checkout

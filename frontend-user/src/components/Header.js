@@ -48,7 +48,7 @@ const Header = () => {
           <div className="row">
             <div className="col-6">
               <p className="text-white mb-0">
-                Free Shipping Over $100 & Free Return
+                Free Shipping Over INR 100 & Free Return
               </p>
             </div>
             <div className="col-6">
