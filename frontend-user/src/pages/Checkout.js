@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { BiArrowBack } from "react-icons/bi";
-import watch from "../images/watch.jpg";
 import Container from "../components/Container";
 import { useDispatch, useSelector } from "react-redux";
 import { useFormik } from "formik";
@@ -140,8 +139,6 @@ const Checkout = () => {
           data,
           config
         );
-
-        console.log(result?.data);
 
         dispatch(
           createOrder({

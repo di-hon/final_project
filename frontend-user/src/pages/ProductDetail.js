@@ -8,10 +8,11 @@ import ProductCard from "../components/ProductCard";
 import { TbGitCompare } from "react-icons/tb";
 import { AiOutlineHeart } from "react-icons/ai";
 import Container from "../components/Container";
-import { useLocation, useNavigate } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import {
   addRating,
+  addToWishlist,
   getAProduct,
   getAllProducts,
 } from "../features/products/productSlice";
@@ -47,6 +48,10 @@ const ProductDetail = () => {
       }
     }
   }, []);
+
+  const addWishlist = (id) => {
+    dispatch(addToWishlist(id));
+  };
 
   const addProductCart = () => {
     if (color === null) {
@@ -145,11 +150,10 @@ const ProductDetail = () => {
                   <ReactStars
                     count={5}
                     size={24}
-                    value={productState?.total_rating.toString()}
+                    value={productState?.total_rating}
                     edit={false}
                     activeColor="#ffd700"
                   />
-                  <p className="mb-0 t-review">( 2 reviews )</p>
                 </div>
                 <a className="review-btn" href="#review">
                   Write a review
@@ -157,8 +161,8 @@ const ProductDetail = () => {
               </div>
               <div className="py-3">
                 <div className="d-flex gap-10 align-items-center my-2">
-                  <h3 className="product-heading">Type :</h3>
-                  <p className="product-data">Watch</p>
+                  <h3 className="product-heading">Category :</h3>
+                  <p className="product-data">{productState?.category}</p>
                 </div>
                 <div className="d-flex gap-10 align-items-center my-2">
                   <h3 className="product-heading">Brand :</h3>
@@ -174,24 +178,7 @@ const ProductDetail = () => {
                 </div>
                 <div className="d-flex gap-10 align-items-center my-2">
                   <h3 className="product-heading">Availability :</h3>
-                  <p className="product-data">In stock</p>
-                </div>
-                <div className="d-flex gap-10 flex-column mt-2 mb-3">
-                  <h3 className="product-heading">Size :</h3>
-                  <div className="d-flex flex-wrap gap-15">
-                    <span className="badge border border-1 bg-white text-dark border-secondary">
-                      S
-                    </span>
-                    <span className="badge border border-1 bg-white text-dark border-secondary">
-                      M
-                    </span>
-                    <span className="badge border border-1 bg-white text-dark border-secondary">
-                      L
-                    </span>
-                    <span className="badge border border-1 bg-white text-dark border-secondary">
-                      XL
-                    </span>
-                  </div>
+                  <p className="product-data">{productState?.quantity}</p>
                 </div>
                 {alreadyAdded === false && (
                   <>
@@ -230,30 +217,29 @@ const ProductDetail = () => {
                         : "ms-5" + "d-flex align-items-center gap-30 ms-5"
                     }
                   >
-                    <button
-                      className="button border-0"
-                      type="submit"
-                      onClick={() => {
-                        alreadyAdded ? navigate("/cart") : addProductCart();
-                      }}
-                    >
-                      {alreadyAdded ? "Go to cart" : "Add to cart"}
-                    </button>
-                    {/* <button className="button signup">Buy it now</button> */}
+                    {productState?.quantity === 0 ? (
+                      <button className="button border-0" disabled="true">
+                        Add to cart
+                      </button>
+                    ) : (
+                      <button
+                        className="button border-0"
+                        type="submit"
+                        onClick={() => {
+                          alreadyAdded ? navigate("/cart") : addProductCart();
+                        }}
+                      >
+                        {alreadyAdded ? "Go to cart" : "Add to cart"}
+                      </button>
+                    )}
                   </div>
                 </div>
                 <div className="d-flex align-items-center gap-15">
                   <div>
-                    <a href="">
-                      <TbGitCompare className="fs-5 me-2" />
-                      Add to compare
-                    </a>
-                  </div>
-                  <div>
-                    <a href="">
+                    <Link onClick={addWishlist(productState?._id)}>
                       <AiOutlineHeart className="fs-5 me-2" />
                       Add to wishlist
-                    </a>
+                    </Link>
                   </div>
                 </div>
                 <div className="d-flex gap-10 flex-column my-3">
@@ -304,11 +290,10 @@ const ProductDetail = () => {
                     <ReactStars
                       count={5}
                       size={24}
-                      value={4}
+                      value={productState?.total_rating}
                       edit={false}
                       activeColor="#ffd700"
                     />
-                    <p className="mb-0">Based on 2 reviews</p>
                   </div>
                 </div>
                 {orderedProduct && (

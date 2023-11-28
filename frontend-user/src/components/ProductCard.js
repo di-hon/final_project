@@ -2,12 +2,8 @@ import React from "react";
 import ReactStars from "react-rating-stars-component";
 import { Link, useLocation } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
-import prodcompare from "../images/prodcompare.svg";
 import wish from "../images/wish.svg";
-import wishlist from "../images/wishlist.svg";
-import watch from "../images/watch.jpg";
 import watch2 from "../images/watch-1.jpg";
-import addcart from "../images/add-cart.svg";
 import view from "../images/view.svg";
 import { addToWishlist } from "../features/products/productSlice";
 
@@ -43,15 +39,9 @@ const ProductCard = (props) => {
                   <img src={wish} alt="wishlist" />
                 </button>
               </div>
-              <div className="product-image">
+              <div>
                 <img
                   src={item?.images[0].url}
-                  className="img-fluid mx-auto"
-                  alt="product image"
-                  width={160}
-                />
-                <img
-                  src={watch2}
                   className="img-fluid mx-auto"
                   alt="product image"
                   width={160}
@@ -63,7 +53,7 @@ const ProductCard = (props) => {
                 <ReactStars
                   count={5}
                   size={24}
-                  value={item?.total_rating.toString()}
+                  value={item?.total_rating}
                   edit={false}
                   activeColor="#ffd700"
                 />
