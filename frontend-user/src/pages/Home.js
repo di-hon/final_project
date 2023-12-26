@@ -359,6 +359,7 @@ const Home = () => {
                     id={item?._id}
                     name={item?.name}
                     brand={item?.brand}
+                    images={item?.images}
                     totalrating={item?.total_rating.toString()}
                     price={item?.price}
                     sold={item?.sold}
@@ -394,15 +395,9 @@ const Home = () => {
                           <img src={wish} alt="wishlist" />
                         </button>
                       </div>
-                      <div className="product-image">
+                      <div>
                         <img
                           src={item?.images[0].url}
-                          className="img-fluid mx-auto"
-                          alt="product image"
-                          width={160}
-                        />
-                        <img
-                          src={watch2}
                           className="img-fluid mx-auto"
                           alt="product image"
                           width={160}

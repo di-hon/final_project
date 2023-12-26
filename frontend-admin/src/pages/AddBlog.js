@@ -27,7 +27,7 @@ const AddBlog = () => {
   const navigate = useNavigate();
   const location = useLocation();
   const getBlogId = location.pathname.split("/")[3];
-  // const [images, setImage] = useState([]);
+  const [image, setImage] = useState([]);
   const blogState = useSelector((state) => state.blogs);
   const imageState = useSelector((state) => state.upload.images);
   const blogCategoryState = useSelector(
@@ -59,7 +59,6 @@ const AddBlog = () => {
     }
   }, [isSuccess, isError, isLoading]);
 
-  const image = [];
   imageState.forEach((i) => {
     image.push({
       public_id: i.public_id,
@@ -73,7 +72,7 @@ const AddBlog = () => {
       title: blogTitle || "",
       category: blogCat || "",
       description: blogDesc || "",
-      images: "",
+      images: image || "",
     },
     validationSchema: schema,
     onSubmit: (values) => {
@@ -108,6 +107,10 @@ const AddBlog = () => {
   useEffect(() => {
     formik.values.images = image;
   }, [blogImages]);
+
+  useEffect(() => {
+    setImage(imageState.map((i) => ({ public_id: i.public_id, url: i.url })));
+  }, [imageState]);
 
   return (
     <div>
