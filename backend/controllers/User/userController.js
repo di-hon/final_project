@@ -469,7 +469,7 @@ const getOrderDetails = asyncHandler(async (req, res) => {
   try {
     const orderDetail = await Order.findOne({ _id: id })
       .populate("orderItems.product")
-      .populate("orderItems.color ");
+      .populate("orderItems.color");
     res.json({
       orderDetail,
     });

@@ -57,7 +57,7 @@ const AddBlog = () => {
     if (isError) {
       toast.error("Something went wrong");
     }
-  }, [isSuccess, isError, isLoading, createdBlog, updatedBlog, navigate]);
+  }, [isSuccess, isError, isLoading]);
 
   const image = [];
   imageState.forEach((i) => {
@@ -98,7 +98,7 @@ const AddBlog = () => {
     } else {
       dispatch(resetState());
     }
-  }, [blogImages, dispatch, getBlogId, image]);
+  }, [getBlogId]);
 
   useEffect(() => {
     dispatch(resetState());
@@ -107,7 +107,7 @@ const AddBlog = () => {
 
   useEffect(() => {
     formik.values.images = image;
-  }, [blogImages, formik.values, image]);
+  }, [blogImages]);
 
   return (
     <div>
